@@ -2,9 +2,11 @@ const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
 const userRoutes = require("./backend/routes/userRoutes"); // ✅ Apenas uma vez
+const cors = require('cors')
 
 const app = express();
 dotenv.config();
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,6 +21,8 @@ app.get("/", (req, res)  => {
 app.get("/register", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "views", "register.html"));
 });
+
+app.use(express.static('frontend'));
 
 // API's routes
 app.use("/api/users", userRoutes);
