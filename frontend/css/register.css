@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Solitreo&display=swap');
+
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color:rgb(129, 89, 167);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#cadastroContainer {
+    background-color:rgb(227, 227, 227);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+h3 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+#cadastroForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+label {
+    font-weight: 600;
+    color: #333;
+}
+
+input {
+    background-color: transparent;
+    padding: 8px 15px;
+    border: 2px solid #9b9b9b;
+    border-radius: 30px;
+    font-size: 16px;
+    width: 100%;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+input[type="radio"]:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+input:focus {
+    border-color: rgb(129, 89, 167);
+    outline: none;
+    box-shadow: 0 0 5px rgba(129, 89, 167, 0.5);
+}
+
+.date-container::after {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6a0dad;
+    font-size: 18px;
+}
+
+input[type="date"] {
+    position: relative;
+    padding-right: 40px;
+    background-color: transparent;
+    color: #333;
+}
+
+input[type="date"]:not(:valid)::before {
+    content: "Data de Nascimento";
+    color: #999;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+input[type="date"]:valid::before,
+input[type="date"]:focus::before {
+    display: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+    color: #333;
+}
+
+input[type="date"]:not(:valid)::-webkit-datetime-edit {
+    color: transparent;
+}
+
+fieldset {
+    border: 2px solid #818181;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+legend {
+    font-weight: 600;
+    color: #333;
+    padding: 0 10px;
+}
+
+button {
+    background-color: #803ab3;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #642899;
+}
+
+#acountUser {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+}
+
+#acountUser a {
+    color: #6a0dad;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#acountUser a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 4px;
+    padding-left: 5px;
+    display: block;
+    height: auto;
+    position: relative;
+    line-height: 1.4;
+}
