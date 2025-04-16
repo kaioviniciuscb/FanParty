@@ -115,22 +115,28 @@ http://localhost:3000
 
 ## 🩻 Estrutura do Projeto
 
-Fanparty/
-  ├── backend/
-  │   ├── config/
-  │   ├── controllers/
-  │   ├── middlewares/
-  │   ├── models/
-  │   ├── repositories/
-  │   ├── routes/
-  │   └── services/
-  │
-  ├── docs/
-  │
-  ├── frontend/
-  │   ├── css/
-  │   ├── js/
-  │   └── views/
+```
+fanparty/
+├── backend/
+│   ├── config/           # Conexão com banco de dados e variáveis de ambiente
+│   ├── controllers/      # Controladores que lidam com as requisições
+│   ├── middlewares/      # Middlewares como autenticação JWT
+│   ├── models/           # Modelos de dados (ex: User)
+│   ├── repositories/     # Lógica de acesso ao banco de dados
+│   ├── routes/           # Arquivos de definição de rotas
+│   └── services/         # Lógica de negócio (cadastro, login, etc.)
+│
+├── frontend/
+│   ├── css/              # Estilos da interface
+│   ├── js/               # Scripts JavaScript
+│   └── views/            # Páginas HTML (login, cadastro, etc.)
+│
+├── docs/                 # Documentos como visão do produto, arquitetura, etc.
+│
+├── .env                  # Variáveis de ambiente
+├── package.json          # Dependências e scripts do Node.js
+└── server.js             # Ponto de entrada da aplicação (Express)
+```
 
 ---
 
