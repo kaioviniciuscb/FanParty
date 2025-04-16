@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-const userRoutes = require("./backend/routes/userRoutes"); // ✅ Apenas uma vez
+const userRoutes = require("./backend/routes/userRoutes");
 const cors = require('cors')
 
 const app = express();
@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Serve the pages
+app.use(express.static('frontend'));
 app.use(express.static(path.join(__dirname, "frontend", "views")));
 
 app.get("/", (req, res)  => {
@@ -21,8 +22,6 @@ app.get("/", (req, res)  => {
 app.get("/register", (req, res) => {
     res.sendFile(path.join(__dirname, "frontend", "views", "register.html"));
 });
-
-app.use(express.static('frontend'));
 
 // API's routes
 app.use("/api/users", userRoutes);
