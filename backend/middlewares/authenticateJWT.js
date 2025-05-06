@@ -7,13 +7,20 @@ function authenticateJWT(req, res, next) {
         const token = authHeader.split(" ")[1];
 
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-            if (err) return res.Status(403).json({ message: "Forbidden: Invalid Token" });
+            if (err) return res.status(403).json({ message: "Forbidden: Invalid Token" });
 
-            req.userId = decoded.userId; // adds user data to the request
+            if (decoded.userType === "common") { // token for common users
+                req.commonUserId = decoded.commonUserId;
+            } else if (decoded.userType === "company") { // token for companies
+                req.companyId = decoded.companyId;
+            } else {
+                return res.status(400).json({ message: "Unknown user type" });
+            }            
+
             next();
         });
     } else {
-        res.Status(401).json({ message: "Unauthorized: Token required" });
+        res.status(401).json({ message: "Unauthorized: Token required" });
     }
 }
 
