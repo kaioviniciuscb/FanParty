@@ -169,31 +169,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 delete data.branch_of_activity;
             }
 
-            fetch('/api/users/register', {
+            const endpoint = data.type === 'comum' 
+                ? '/api/common-users/register' 
+                : '/api/companies/register';
+
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => {
-                            throw new Error(err.message || 'Erro no cadastro');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    alert('Cadastro realizado com sucesso!');
-                    form.reset();
-                    clearAllErrors();
-                    document.getElementById('userFields').style.display = 'none';
-                    document.getElementById('promoterFields').style.display = 'none';
-                })
-                .catch(error => {
-                    alert('Erro ao cadastrar: ' + error.message);
-                });
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Erro no cadastro');
+                    });
+                }
+                return response.json();
+            })
+            .then(result => {
+                alert('Cadastro realizado com sucesso!');
+                form.reset();
+                clearAllErrors();
+                document.getElementById('userFields').style.display = 'none';
+                document.getElementById('promoterFields').style.display = 'none';
+            })
+            .catch(error => {
+                alert('Erro ao cadastrar: ' + error.message);
+            });
         } else {
             const firstError = document.querySelector('.error');
             if (firstError) {
