@@ -1,113 +1,168 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Solitreo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color:rgb(129, 89, 167);
+    background: linear-gradient(135deg, #6e48aa, #9d50bb);
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    padding: 20px;
 }
 
 #cadastroContainer {
-    background-color:rgb(227, 227, 227);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 40px;
     width: 100%;
-    max-width: 500px;
-    box-sizing: border-box;
+    max-width: 550px;
+    position: relative;
+    overflow: hidden;
+}
+
+#cadastroContainer::before {
+    display: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(to right, #6e48aa, #9d50bb);
 }
 
 h3 {
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #4a2a7a;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #6e48aa, #9d50bb);
+    border-radius: 3px;
 }
 
 #cadastroForm {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 5px;
+    gap: 8px;
     position: relative;
 }
 
 label {
-    font-weight: 600;
-    color: #333;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem;
+    margin-left: 5px;
 }
 
 input {
-    background-color: transparent;
-    padding: 8px 15px;
-    border: 2px solid #9b9b9b;
-    border-radius: 30px;
-    font-size: 16px;
+    background-color: #f9f9f9;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
     width: 100%;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #8a63c5;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(138, 99, 197, 0.2);
+    background-color: #fff;
 }
 
 input[type="radio"] {
     width: auto;
-    margin-right: 10px;
+    margin-right: 8px;
+    accent-color: #6e48aa;
 }
 
-input[type="radio"]:focus {
-    box-shadow: none;
-    outline: none;
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-input:focus {
-    border-color: rgb(129, 89, 167);
-    outline: none;
-    box-shadow: 0 0 5px rgba(129, 89, 167, 0.5);
+.radio-option {
+    display: flex;
+    align-items: center;
 }
 
-.date-container::after {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    color: #6a0dad;
-    font-size: 18px;
+/* ESTILOS ESPECÍFICOS PARA O CAMPO DE DATA */
+.date-container {
+    position: relative;
 }
 
 input[type="date"] {
+    color: transparent; /* Esconde o texto nativo */
     position: relative;
-    padding-right: 40px;
-    background-color: transparent;
-    color: #333;
+    z-index: 2;
 }
 
-input[type="date"]:not(:valid)::before {
+input[type="date"]:valid,
+input[type="date"]:focus {
+    color: #333; /* Mostra o texto quando válido ou em foco */
+}
+
+/* Placeholder personalizado */
+input[type="date"]::before {
     content: "Data de Nascimento";
-    color: #999;
     position: absolute;
     left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 12px;
+    color: #999;
     pointer-events: none;
+    background-color: #f9f9f9;
+    padding: 0 5px;
+    z-index: 1;
 }
 
+/* Esconde o placeholder quando tem valor ou está em foco */
 input[type="date"]:valid::before,
 input[type="date"]:focus::before {
     display: none;
 }
 
+/* Ícone de calendário personalizado */
+.date-container::after {
+    content: '📅';
+    position: absolute;
+    right: 15px;
+    top: 36%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6e48aa;
+    z-index: 3;
+}
+
+/* Mantém o datepicker funcional */
 input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     top: 0;
@@ -119,68 +174,82 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: transparent;
     background: transparent;
     cursor: pointer;
-}
-
-input[type="date"]::-webkit-datetime-edit {
-    color: #333;
-}
-
-input[type="date"]:not(:valid)::-webkit-datetime-edit {
-    color: transparent;
+    z-index: 4;
 }
 
 fieldset {
-    border: 2px solid #818181;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 10px 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 5px 0 15px;
 }
 
 legend {
-    font-weight: 600;
-    color: #333;
+    font-weight: 500;
+    color: #555;
     padding: 0 10px;
+    font-size: 0.95rem;
 }
 
 button {
-    background-color: #803ab3;
+    background: linear-gradient(to right, #6e48aa, #8a63c5);
     color: white;
     border: none;
     padding: 14px;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 button:hover {
-    background-color: #642899;
+    background: linear-gradient(to right, #5d3a99, #7a52b0);
+    box-shadow: 0 4px 12px rgba(110, 72, 170, 0.3);
 }
 
 #acountUser {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 25px;
     color: #666;
+    font-size: 0.9rem;
 }
 
 #acountUser a {
-    color: #6a0dad;
+    color: #6e48aa;
     text-decoration: none;
     font-weight: 600;
+    transition: color 0.2s;
 }
 
 #acountUser a:hover {
+    color: #4a2a7a;
     text-decoration: underline;
 }
 
 .error-message {
     color: #e74c3c;
-    font-size: 13px;
-    margin-top: 4px;
+    font-size: 0.8rem;
+    margin-top: 5px;
     padding-left: 5px;
     display: block;
     height: auto;
-    position: relative;
     line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+    #cadastroContainer {
+        padding: 30px 20px;
+    }
+    
+    h3 {
+        font-size: 1.7rem;
+    }
+    
+    input {
+        padding: 10px 15px;
+    }
 }
