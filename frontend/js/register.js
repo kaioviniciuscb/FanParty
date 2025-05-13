@@ -139,6 +139,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function showToast(message, duration = 3000, showLoader = false, type) {
+        const toast = document.getElementById('toastNotification');
+        const messageEl = document.getElementById('toastMessage');
+        const loader = document.getElementById('toastLoader');
+        type = type || 'success';
+
+         // Limpa classes antigas
+        toast.classList.remove('toast-success', 'toast-error');
+
+        // Adiciona classe correta
+        if (type === 'success') {
+            toast.classList.add('toast-success');
+        } else {
+            toast.classList.add('toast-error');
+        }
+        
+        messageEl.textContent = message;
+        loader.style.display = showLoader ? 'inline-block' : 'none';
+        toast.classList.add('show');
+        
+        if (duration) {
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+    }
+
     document.querySelectorAll('#cadastroForm input').forEach(setupFieldValidation);
 
     const form = document.getElementById('cadastroForm');
@@ -189,14 +216,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(result => {
-                alert('Cadastro realizado com sucesso!');
-                form.reset();
-                clearAllErrors();
-                document.getElementById('userFields').style.display = 'none';
-                document.getElementById('promoterFields').style.display = 'none';
+                showToast('Cadastro realizado com sucesso!', 3000, true, 'success');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000);
             })
             .catch(error => {
-                alert('Erro ao cadastrar: ' + error.message);
+                showToast('Erro ao cadastrar : ' + error.message, 3000, true, 'error');	
             });
         } else {
             const firstError = document.querySelector('.error');
@@ -219,9 +245,5 @@ document.addEventListener('DOMContentLoaded', function () {
             e.target.value = value;
             validateField(e.target);
         });
-    }
-
-    function getAuthToken() {
-        return localStorage.getItem('token');
     }
 });

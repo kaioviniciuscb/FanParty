@@ -36,22 +36,6 @@ const EventRepository = {
         });
     },
 
-    async findByEmail(email) {
-        return new Promise((resolve, reject) => {
-            db.query(
-                `SELECT * FROM events WHERE email = ?`,
-                [email],
-                (err, results) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(results.length ? new Event(results[0]) : null);
-                    }
-                }
-            );
-        });
-    },
-
     async findAll(){
         return new Promise((resolve, reject) => {
             db.query(
