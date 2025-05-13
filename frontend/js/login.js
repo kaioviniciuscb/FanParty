@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('token', data.token);
             console.log(data);
 
-            //window.location.href = 'ALTERAR PARA O HOME DO USUÁRIO';
+            window.location.href = '../views/event.html';
 
         }catch (error) {
             console.error('Erro ao fazer login:', error);
