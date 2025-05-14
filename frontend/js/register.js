@@ -139,6 +139,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function showToast(message, duration = 3000, showLoader = false, type) {
+        const toast = document.getElementById('toastNotification');
+        const messageEl = document.getElementById('toastMessage');
+        const loader = document.getElementById('toastLoader');
+        type = type || 'success';
+
+         // Limpa classes antigas
+        toast.classList.remove('toast-success', 'toast-error');
+
+        // Adiciona classe correta
+        if (type === 'success') {
+            toast.classList.add('toast-success');
+        } else {
+            toast.classList.add('toast-error');
+        }
+        
+        messageEl.textContent = message;
+        loader.style.display = showLoader ? 'inline-block' : 'none';
+        toast.classList.add('show');
+        
+        if (duration) {
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+    }
+
     document.querySelectorAll('#cadastroForm input').forEach(setupFieldValidation);
 
     const form = document.getElementById('cadastroForm');
@@ -169,31 +196,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 delete data.branch_of_activity;
             }
 
-            fetch('/api/users/register', {
+            const endpoint = data.type === 'comum' 
+                ? '/api/common-users/register' 
+                : '/api/companies/register';
+
+            fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => {
-                            throw new Error(err.message || 'Erro no cadastro');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(result => {
-                    alert('Cadastro realizado com sucesso!');
-                    form.reset();
-                    clearAllErrors();
-                    document.getElementById('userFields').style.display = 'none';
-                    document.getElementById('promoterFields').style.display = 'none';
-                })
-                .catch(error => {
-                    alert('Erro ao cadastrar: ' + error.message);
-                });
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Erro no cadastro');
+                    });
+                }
+                return response.json();
+            })
+            .then(result => {
+                showToast('Cadastro realizado com sucesso!', 3000, true, 'success');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 3000);
+            })
+            .catch(error => {
+                showToast('Erro ao cadastrar : ' + error.message, 3000, true, 'error');	
+            });
         } else {
             const firstError = document.querySelector('.error');
             if (firstError) {
@@ -215,9 +245,5 @@ document.addEventListener('DOMContentLoaded', function () {
             e.target.value = value;
             validateField(e.target);
         });
-    }
-
-    function getAuthToken() {
-        return localStorage.getItem('token');
     }
 });

@@ -5,41 +5,73 @@ dotenv.config();
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    multipleStatement: true
+    password: process.env.DB_PASSWORD
 });
 
 connection.connect((err) => {
     if (err) throw err;
     console.log("Connected to MySQL");
 
-    // Creation of database
-    connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`, (err) => {
-        if(err) throw err;
+    // Database creation
+    connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\``, (err) => {
+        if (err) throw err;
         console.log("Database created/verified");
 
         connection.changeUser({ database: process.env.DB_NAME }, (err) => {
             if (err) throw err;
 
-            // Creation of tables
-            const createTables = `
-                CREATE TABLE IF NOT EXISTS users (
+            const createTables = [
+                `CREATE TABLE IF NOT EXISTS common_users (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     email VARCHAR(100) UNIQUE NOT NULL,
                     password VARCHAR(255) NOT NULL,
-                    type ENUM('comum', 'empresa') NOT NULL,
                     full_name VARCHAR(255),
                     date_of_birth DATE,
+                    is_activated BOOLEAN DEFAULT TRUE
+                )`,
+                `CREATE TABLE IF NOT EXISTS companies (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    email VARCHAR(100) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
                     company_name VARCHAR(255),
                     cnpj VARCHAR(20),
-                    branch_of_activity VARCHAR(100)
-                );
-            `;
+                    branch_of_activity VARCHAR(100),
+                    is_activated BOOLEAN DEFAULT TRUE
+                )`,
+                `CREATE TABLE IF NOT EXISTS events (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    title VARCHAR(255) NOT NULL,
+                    event_description TEXT,
+                    occasion_date DATE,
+                    location VARCHAR(255),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    is_activated BOOLEAN DEFAULT TRUE
+                )`,
+                `CREATE TABLE IF NOT EXISTS common_user_events (
+                    common_user_id INT,
+                    event_id INT UNIQUE,
+                    PRIMARY KEY (common_user_id, event_id),
+                    FOREIGN KEY (common_user_id) REFERENCES common_users(id) ON DELETE CASCADE,
+                    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+                )`,
+                `CREATE TABLE IF NOT EXISTS company_events (
+                    company_id INT,
+                    event_id INT UNIQUE,
+                    PRIMARY KEY (company_id, event_id),
+                    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
+                    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+                )`
+            ];
 
-            connection.query(createTables, (err) => {
-                if (err) throw err;
-                console.log("Tables created/verified sucessfully");
-            });
+            // Execute each query sequentially
+            for (const query of createTables) {
+                connection.query(query, (err) => {
+                    if (err) throw err;
+                });
+            }
+
+            console.log("Tables created/verified successfully");
         });
     });
 });
