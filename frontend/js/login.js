@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const companyData = await response.json();
                 localStorage.setItem('token', companyData.token);
-                console.log(companyData.data);
                 window.location.href = '../views/event.html';
                 
             } else {
