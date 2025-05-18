@@ -26,33 +26,40 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Entrando...';
 
-        try{
-            const response = await fetch('/api/common-users/login', {
+       try {
+            let response = await fetch('/api/common-users/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        });
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-        if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Erro na requisição');
+            if (!response.ok) {
+                response = await fetch('/api/companies/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Credenciais inválidas.');
+                }
+
+                const companyData = await response.json();
+                localStorage.setItem('token', companyData.token);
+                console.log(companyData.data);
+                window.location.href = '../views/event.html';
+                
+            } else {
+                const userData = await response.json();
+                localStorage.setItem('token', userData.token);
+                window.location.href = '../views/event.html';
             }
-            const data = await response.json();
-            // Armazena o token no localStorage
-            localStorage.setItem('token', data.token);
-            console.log(data);
 
-            window.location.href = '../views/event.html';
-
-        }catch (error) {
+        } catch (error) {
             console.error('Erro ao fazer login:', error);
-            showToast(error.message || 'Credenciais inválidas. Tente novamente.');
-        }finally {
+            showToast(error.message || 'Credenciais inválida.');
+        } finally {
             submitButton.disabled = false;
             submitButton.textContent = 'Entrar';
         }
