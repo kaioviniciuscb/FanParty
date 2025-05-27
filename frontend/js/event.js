@@ -235,6 +235,11 @@ function showToast(message, duration = 3000, showLoader = false, type = 'success
   }, duration);
 }
 
+document.getElementById('backHomeBtn').addEventListener('click', () => {
+  window.location.href = '../views/home.html';
+});
+
+
 // Carregar e renderizar eventos ao carregar a página
 async function loadAndRenderEvents() {
   const events = await fetchEvents();
