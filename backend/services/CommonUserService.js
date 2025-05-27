@@ -28,7 +28,7 @@ const CommonUserService = {
         const validPassword = await bcrypt.compare(password, commonUser.password);
         if (!validPassword) throw new Error("Credenciais inválidas!");
 
-        const token = jwt.sign({ commonUserId: commonUser.id, userType: 'common' }, secret, { expiresIn: "1h" });
+        const token = jwt.sign({ id: commonUser.id, type: 'common_user' }, secret, { expiresIn: "1h" });
 
         return { message: "Login realizado com sucesso!", token };
     },

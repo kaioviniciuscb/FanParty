@@ -61,6 +61,17 @@ connection.connect((err) => {
                     PRIMARY KEY (company_id, event_id),
                     FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
                     FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+                )`,
+                `CREATE TABLE IF NOT EXISTS comments (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    author_id INT NOT NULL,
+                    author_type ENUM('common_user', 'company') NOT NULL,
+                    event_id INT NOT NULL,
+                    content TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    is_activated BOOLEAN DEFAULT TRUE,
+                    FOREIGN KEY (event_id) REFERENCES events(id)
                 )`
             ];
 

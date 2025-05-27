@@ -21,7 +21,10 @@ const CompanyController = {
 
     async getProfile(req, res) {
         try {
-            const company = await CompanyService.getProfile(req.companyId);
+            if (req.user.type !== "company") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const company = await CompanyService.getProfile(req.user.id);
             res.status(200).json(company);
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -30,7 +33,10 @@ const CompanyController = {
 
     async update(req, res) {
         try {
-            const result = await CompanyService.update(req.companyId, req.body);
+            if (req.user.type !== "company") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CompanyService.update(req.user.id, req.body);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -39,7 +45,10 @@ const CompanyController = {
 
     async activate(req, res) {
         try {
-            const result = await CompanyService.activate(req.companyId);
+            if (req.user.type !== "company") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CompanyService.activate(req.user.id);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -48,7 +57,10 @@ const CompanyController = {
 
     async deactivate(req, res) {
         try {
-            const result = await CompanyService.deactivate(req.companyId);
+            if (req.user.type !== "company") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CompanyService.deactivate(req.user.id);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });

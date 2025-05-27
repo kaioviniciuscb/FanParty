@@ -16,7 +16,6 @@ function goToProfile() {
   }
   window.location.href = "/profile.html";
 }
-
 // Função para buscar eventos ativos
 async function fetchActiveEvents() {
   const res = await fetch(API_URL);
