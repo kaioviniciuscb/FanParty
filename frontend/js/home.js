@@ -6,6 +6,17 @@ const orderSelect = document.getElementById("ordem");
 
 let allEvents = [];
 
+// Verifica se o usuário está logado
+function goToProfile() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    alert("Você precisa estar logado para acessar o perfil.");
+    window.location.href = "/login.html";
+    return;
+  }
+  window.location.href = "/profile.html";
+}
+
 // Função para buscar eventos ativos
 async function fetchActiveEvents() {
   const res = await fetch(API_URL);
