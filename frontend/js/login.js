@@ -47,12 +47,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const companyData = await response.json();
                 localStorage.setItem('token', companyData.token);
-                window.location.href = '../views/event.html';
+                window.location.href = '../views/home.html';
                 
             } else {
                 const userData = await response.json();
                 localStorage.setItem('token', userData.token);
-                window.location.href = '../views/event.html';
+                window.location.href = '../views/home.html';
             }
 
         } catch (error) {
