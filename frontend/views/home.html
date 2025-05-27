@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>FanParty</title>
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <h1>FanParty</h1>
+      <div class="profile">
+        <img src="../images/imagem-perfil.png" alt="Perfil" class="profile-icon" onclick="toggleMenu()" />
+        <span class="profileName">Olá, <span id="userName">Usuário</span></span>
+        <div class="dropdown-menu" id="profileDropdown">
+          <a href="#">Meu Perfil</a>
+          <a href="event.html">Meus Eventos</a>
+          <a href="login.html" onclick="logout()">Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <div id="container">
+    <aside class="filtros">
+      <h3>Filtrar eventos</h3>
+      <form id="filtroEventos">
+        <label for="search">Pesquisar por nome:</label>
+        <input type="text" id="search" name="search" placeholder="Digite o nome do evento">
+
+        <label for="data">Filtrar por data:</label>
+        <input type="date" id="data" name="data">
+
+        <label for="ordem">Ordenar por:</label>
+        <select id="ordem" name="ordem">
+          <option value="default">Padrão</option>
+          <option value="asc">A-Z</option>
+          <option value="desc">Z-A</option>
+        </select>
+      </form>
+    </aside>
+
+    <main>
+      <h1>Eventos disponíveis</h1>
+      <div id="eventsContainer"></div>
+    </main>
+  </div>
+
+  <script src="../js/home.js"></script>
+</body>
+</html>

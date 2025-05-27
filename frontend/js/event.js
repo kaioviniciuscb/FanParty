@@ -172,7 +172,7 @@ function setupEventButtons() {
 
         loadAndRenderEvents();
       } else {
-        showToast("Evento não excluído.", 3000, false, 'error');
+        return;
       }
     });
   });

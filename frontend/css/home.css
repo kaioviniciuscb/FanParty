@@ -1,0 +1,255 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #b9b9b9; /* Mantido como no seu último envio, incluindo a transparência */
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #5015bd;
+  padding: 20px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.header-container h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Estiliza o container principal */
+#container {
+  display: flex;
+  align-items: flex-start; /* alinha topo com topo */
+  gap: 40px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+/* Aside da barra lateral de filtros */
+.filtros {
+  background-color: #dcdcdc;
+  padding: 30px 30px 50px 30px;
+  border-radius: 10px;
+  box-shadow: 10px 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 0 0 400px; /* largura fixa */
+  margin: 70px 0px 0px 50px;
+}
+
+.filtros h3{
+  padding-bottom: 20px;
+}
+
+/* Formulário dentro do aside */
+.filtros form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs e select */
+.filtros input,
+.filtros select {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.filtros label{
+  font-family: 'Lora', serif;
+}
+
+/* Conteúdo principal */
+main {
+  padding: 40px 20px 20px 300px;
+  font-size: 1rem;
+  width: 100%;
+  margin: 0;
+}
+
+#eventsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+/* Cartões de evento */
+.event-card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  width: 100%; 
+}
+
+.event-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.event-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+}
+
+.event-date,
+.event-location,
+.event-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.event-description strong,
+.event-location strong,
+.event-date strong {
+  color: #333;
+}
+
+/* Perfil */
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #ececec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.profile-icon:hover {
+  transform: scale(1.05);
+}
+
+.profileName,
+#userName {
+  font-size: 1rem;
+  color: #e9e9e9; /* Roxo */
+  font-weight: 600;
+  font-family: 'popins', sans-serif;
+}
+
+.profileName {
+  margin-left: 10px;
+}
+
+/* Dropdown */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: #b9c9ff;
+}
+
+/* Responsividade */
+@media (max-width: 1450px) {
+  main {
+    padding-left: 100px;
+  }
+  #eventsContainer {
+    grid-template-columns: 1fr; /* Uma coluna */
+    gap: 20px;
+  }
+  
+  /* #eventsContainer não é alterado aqui para manter 2 colunas até a próxima breakpoint */
+}
+
+@media (max-width: 930px) {
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-container h1 {
+    font-size: 1.5rem; /* diminui o tamanho pra caber */
+  }
+
+  #container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .filtros {
+    width: 100%;
+    flex: none;
+    padding: 20px;
+    margin: 40px 0px 20px 0; /* Remove margem lateral */
+  }
+
+  main {
+    padding: 20px 0; /* Remove padding lateral */
+    margin-top: 20px; /* Adiciona espaço entre filtros e eventos */
+    width: 100%;
+  }
+
+  main > h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Em telas menores que 930px, os cards voltam para 1 coluna */
+  #eventsContainer {
+    grid-template-columns: 1fr; /* Uma coluna */
+    gap: 20px;
+  }
+
+  .event-card {
+    padding: 16px;
+    max-width: 100%;
+  }
+}
