@@ -39,6 +39,7 @@ h1::after {
     border-radius: 5px;
 }
 
+/* Botões gerais */
 button {
     padding: 10px 20px;
     border: none;
@@ -52,15 +53,16 @@ button:hover {
     transform: translateY(-3px);
 }
 
-.event-item .button-group button {
+/* Botões dentro de grupos */
+.button-group button {
     margin-right: 10px;
 }
 
-.event-item .button-group button:last-child {
+.button-group button:last-child {
     margin-right: 0;
 }
 
-/* Botões personalizados */
+/* Botões específicos */
 .btn-primary {
     background-color: #9D50BB;
     color: white;
@@ -109,7 +111,7 @@ button:hover {
     background-color: #f4511e;
 }
 
-/* Estilo do formulário */
+/* Formulário */
 .form-container {
     background: #ffffff;
     padding: 20px;
@@ -170,6 +172,7 @@ textarea {
     background-color: #e53935;
 }
 
+/* Seção de eventos */
 .events-section {
     margin-top: 40px;
 }
@@ -180,24 +183,24 @@ textarea {
     flex-direction: column;
 }
 
-.event-item {
+/* CARD dos eventos */
+.event-card {
     background-color: #ffffff;
     padding: 20px;
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 100%;
-    overflow: hidden; 
-    word-wrap: break-word; 
+    overflow-wrap: break-word; /* quebras de linha */
 }
 
-.event-item h3 {
+.event-card h3 {
     color: #4A2A7A;
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-.event-item p {
+.event-card p {
     font-size: 1rem;
     margin-bottom: 8px;
     word-wrap: break-word; 
@@ -205,53 +208,54 @@ textarea {
     white-space: normal;
 }
 
-.event-item .event-date {
-    color: #777;
-    font-size: 0.9rem;
+.event-card p strong {
+    color: #000; /* Destaque nos labels */
 }
 
-.event-item .event-location {
-    font-weight: bold;
-    color: #555;
-}
-
-.event-item .button-group {
+/* Botões dentro do card */
+.event-card .button-group {
     margin-top: 10px;
 }
 
-/* Estilo geral do Toast */
 .toast {
-  background-color: #333;
-  color: rgb(255, 255, 255);
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  opacity: 0;
-  transform: translateX(100%);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+    min-width: 250px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: fixed;
+    z-index: 9999;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    top: 20px; 
+    right: 20px; 
+    background-color: #2196F3;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .toast.show {
-  opacity: 1;
-  transform: translateX(0);
+    opacity: 1;
+    transform: translateX(0);
 }
 
-/* Estilo para sucesso */
 .toast-success {
-  background-color: #6fb670;
+    background-color: #4fa051;
 }
 
-/* Estilo para erro */
 .toast-error {
-  background-color: #f44336;
+    background-color: #f44336;
 }
 
-/* Loader (ícone de carregamento) */
+/* Loader */
 #toastLoader {
-  display: inline-block;
-  margin-left: 10px;
+    display: inline-block;
+    margin-left: 10px;
 }
 
+/* Botão voltar para home */
 #backHomeBtn {
   position: fixed;
   top: 20px;
@@ -273,6 +277,7 @@ textarea {
 
 #backHomeBtn:hover {
   background-color: #574b90;
+  transform: translateY(-3px);
 }
 
 #backHomeBtn svg {
@@ -296,7 +301,7 @@ textarea {
         padding: 15px;
     }
 
-        .form-actions {
+    .form-actions {
         flex-direction: column;
     }
 

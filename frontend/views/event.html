@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gerenciador de Eventos</title>
-  <link rel="stylesheet" href="../css/event.css">
+  <link rel="stylesheet" href="../css/event.css" />
 </head>
 <body>
 
@@ -15,7 +15,7 @@
   </button>
 
   <header>
-    <h1>Eventos</h1>
+    <h1>Meus Eventos Criados</h1>
   </header>
 
   <main>
@@ -24,10 +24,10 @@
     <section id="formSection" class="form-container" hidden>
       <h2 id="formTitle">Novo Evento</h2>
       <form id="eventForm">
-        <input type="hidden" id="eventId">
+        <input type="hidden" id="eventId" />
         <fieldset>
           <label for="title">Título:</label>
-          <input type="text" id="title" required>
+          <input type="text" id="title" required />
         </fieldset>
         <fieldset>
           <label for="description">Descrição:</label>
@@ -35,11 +35,11 @@
         </fieldset>
         <fieldset>
           <label for="date">Data:</label>
-          <input type="date" id="date" min="2025-01-01" max="2060-12-31" required>
+          <input type="date" id="date" min="2025-01-01" max="2060-12-31" required />
         </fieldset>
         <fieldset>
           <label for="location">Local:</label>
-          <input type="text" id="location" required>
+          <input type="text" id="location" required />
         </fieldset>
         <div class="form-actions">
           <button type="submit" class="btn-success">Salvar</button>
@@ -49,19 +49,14 @@
     </section>
 
     <section class="events-section">
-      <h2>Eventos Cadastrados: </h2>
       <div id="eventsContainer" class="events-container"></div>
     </section>
-
   </main>
 
-  <!-- Toast Container -->
-  <div id="toastNotification" class="toast" style="position: fixed; top: 20px;
-    right: 20px; z-index: 9999;">
+  <div id="toastNotification" class="toast" style="position: fixed; top: 20px; right: 20px; z-index: 9999;">
     <div id="toastMessage"></div>
     <div id="toastLoader" style="display: none;">🔄</div>
   </div>
-
 
   <script src="../js/event.js"></script>
 </body>
