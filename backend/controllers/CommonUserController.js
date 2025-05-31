@@ -21,7 +21,10 @@ const CommonUserController = {
 
     async getProfile(req, res) {
         try {
-            const commonUser = await CommonUserService.getProfile(req.commonUserId);
+            if (req.user.type !== "common_user") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const commonUser = await CommonUserService.getProfile(req.user.id);
             res.status(200).json(commonUser);
         } catch (error) {
             res.status(404).json({ message: error.message });
@@ -30,7 +33,10 @@ const CommonUserController = {
 
     async update(req, res) {
         try {
-            const result = await CommonUserService.update(req.commonUserId, req.body);
+            if (req.user.type !== "common_user") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CommonUserService.update(req.user.id, req.body);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -39,7 +45,10 @@ const CommonUserController = {
 
     async activate(req, res) {
         try {
-            const result = await CommonUserService.activate(req.commonUserId);
+            if (req.user.type !== "common_user") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CommonUserService.activate(req.user.id);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -48,7 +57,10 @@ const CommonUserController = {
 
     async deactivate(req, res) {
         try {
-            const result = await CommonUserService.deactivate(req.commonUserId);
+            if (req.user.type !== "common_user") {
+                return res.status(403).json({ message: "Acesso negado" });
+            }
+            const result = await CommonUserService.deactivate(req.user.id);
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });

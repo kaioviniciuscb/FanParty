@@ -104,7 +104,6 @@ async function fetchAndDisplayUserName() {
     if (!res.ok) throw new Error('Erro ao buscar perfil');
 
     const data = await res.json();
-
     const userNameElem = document.getElementById('userName');
     if (userNameElem) {
       userNameElem.textContent = data.full_name || data.company_name || 'Usuário';
@@ -115,7 +114,6 @@ async function fetchAndDisplayUserName() {
   }
 }
 
-// Aplica os filtros e ordena os eventos antes de renderizar
 function applyFilters() {
   const searchTerm = searchInput.value.toLowerCase();
   const selectedDate = dateInput.value;
@@ -140,13 +138,13 @@ function applyFilters() {
   } else if (selectedOrder === 'desc') {
     filtered.sort((a, b) => b.title.localeCompare(a.title));
   } else {
+    // Default: data mais recente primeiro
     filtered.sort((a, b) => new Date(b.occasion_date) - new Date(a.occasion_date));
   }
 
   renderActiveEvents(filtered);
 }
 
-// Carrega eventos e aplica filtros na página inicial
 async function loadHomePageEvents() {
   allEvents = await fetchActiveEvents();
   applyFilters();
@@ -170,6 +168,7 @@ dateInput.addEventListener("change", applyFilters);
 orderSelect.addEventListener("change", applyFilters);
 
 // Menu do perfil
+
 function toggleMenu() {
   const dropdown = document.getElementById('profileDropdown');
   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';

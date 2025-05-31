@@ -28,7 +28,7 @@ const CompanyService = {
         const validPassword = await bcrypt.compare(password, company.password);
         if (!validPassword) throw new Error("Credenciais inválidas!");
 
-        const token = jwt.sign({ companyId: company.id, userType: 'company' }, secret, { expiresIn: "1h" });
+        const token = jwt.sign({ id: company.id, type: 'company' }, secret, { expiresIn: "1h" });
 
         return { message: "Login realizado com sucesso!", token };
     },
