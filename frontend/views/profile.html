@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Perfil do Usuário</title>
-  <link rel="stylesheet" href="../css/profile.css"/>
+  <link rel="stylesheet" href="../css/profile.css" />
 </head>
 <body>
   <div class="profile-container">
@@ -12,29 +12,54 @@
     <div id="profileInfo">
       <p><strong>Nome:</strong> <span id="name"></span></p>
       <p><strong>Email:</strong> <span id="email"></span></p>
-      <p><strong>Data de Nascimento:</strong> <span id="birthdate"></span></p>
     </div>
 
     <form id="updateProfileForm">
       <h2>Atualizar Perfil</h2>
-      <p>Todos os campos devem ser preenchidos. Mesmo que não deseje alterar algum campo, é necessário preenchê-lo com a informação atual.</p>
-      <label for="nameInput">Nome:</label>
-      <input type="text" id="nameInput" name="name" placeholder="Digite o nome" required />
+      <p>Preencha todos os campos para atualizar seu perfil.</p>
 
       <label for="emailInput">Email:</label>
-      <input type="email" id="emailInput" name="email" placeholder="Digite o email" required />
+      <input type="email" id="emailInput" name="email" required placeholder="Digite o email" />
 
-      <label for="birthdateInput">Data de Nascimento:</label>
-      <input type="date" id="birthdateInput" name="birthdate" />
+      <!-- Campos para usuário comum -->
+      <div id="commonFields" style="display:none;">
+        <label for="fullNameInput">Nome Completo:</label>
+        <input type="text" id="fullNameInput" name="full_name" required placeholder="Digite seu nome completo" />
+
+        <label for="dateOfBirthInput">Data de Nascimento:</label>
+        <input type="date" id="dateOfBirthInput" name="date_of_birth" required />
+      </div>
+
+      <!-- Campos para empresa -->
+      <div id="companyFields" style="display:none;">
+        <label for="companyNameInput">Nome da Empresa:</label>
+        <input type="text" id="companyNameInput" name="company_name" required placeholder="Digite o nome da empresa" />
+
+        <label for="cnpjInput">CNPJ:</label>
+        <input type="text" id="cnpjInput" name="cnpj" required placeholder="Digite o CNPJ" />
+
+        <label for="branchInput">Ramo de Atividade:</label>
+        <input type="text" id="branchInput" name="branch_of_activity" required placeholder="Digite o ramo de atividade" />
+      </div>
+
+      <label for="passwordInput">Nova Senha:</label>
+      <input type="password" id="passwordInput" name="password" required placeholder="Digite a nova senha" />
+
+      <label for="confirmPasswordInput">Confirmar Senha:</label>
+      <input type="password" id="confirmPasswordInput" name="confirmPassword" required placeholder="Confirme a nova senha" />
 
       <button type="submit">Atualizar Perfil</button>
     </form>
   </div>
   <button id="backHomeBtn" title="Voltar para a Home" aria-label="Home">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
-    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+  </button>
+
+  <div id="toastNotification" class="toast">
+    <div id="toastMessage"></div>
+  </div>
 
   <script src="../js/profile.js"></script>
 </body>

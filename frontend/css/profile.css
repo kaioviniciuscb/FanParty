@@ -1,137 +1,275 @@
-/* profile.css */
+@charset "UTF-8";
+
+/* Importe suas fontes. Mantenha 'Poppins' para textos gerais e 'Lora' para algo específico como labels. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+/* --- Variáveis CSS para Paleta de Cores (Facilita a manutenção) --- */
+:root {
+    --primary-color: #6c63ff; /* Seu azul/roxo principal */
+    --primary-dark: #584be0;  /* Tom mais escuro do principal */
+    --primary-light: #8b83ff; /* Tom mais claro do principal */
+    --accent-color: #00bcd4;  /* Ciano vibrante como acento (poderia ser um verde menta, laranja, etc.) */
+    --text-dark: #212121;     /* Quase preto para títulos e textos importantes */
+    --text-medium: #424242;   /* Cinza escuro para parágrafos */
+    --text-light: #757575;    /* Cinza médio para placeholders e textos secundários */
+    --background-light: #f4f6fa; /* Fundo claro geral */
+    --background-card: #ffffff; /* Fundo de cards/containers */
+    --border-color: #e0e0e0;  /* Borda suave */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+
+/* Reset (mantido, mas com algumas padronizações) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Poppins como fonte padrão */
+}
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding-top: 40px;
+    background-color: var(--background-light); /* Usando variável */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha ao topo */
+    min-height: 100vh;
+    padding-top: 60px; /* Mais espaço no topo */
+    font-size: 16px; /* Tamanho base para texto */
+    line-height: 1.6; /* Altura da linha para melhor leitura */
+    color: var(--text-medium); /* Cor de texto padrão */
 }
 
 .profile-container {
-  background-color: #ffffff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  width: 100%;
+    background-color: var(--background-card); /* Usando variável */
+    padding: 30px 40px;
+    border-radius: 16px; /* Aumentado para um visual mais suave/moderno */
+    box-shadow: 0 8px 30px var(--shadow-light); /* Sombra mais difusa */
+    max-width: 500px;
+    width: 90%; /* Mais responsivo em telas menores */
+    box-sizing: border-box;
+    margin: 20px auto; /* Centraliza e dá um respiro nas laterais */
 }
 
-h1, h2 {
-  color: #3a3a3a;
-  text-align: center;
+h1 {
+    font-size: 2.2rem; /* Um pouco maior */
+    color: var(--primary-color); /* Título principal na cor primária */
+    text-align: center;
+    margin-bottom: 25px; /* Mais espaço */
+    font-weight: 700;
 }
 
 h2 {
-  margin-top: 30px;
-  font-size: 20px;
-  color: #555;
+    font-size: 1.5rem; /* Ajustado para ser mais hierárquico */
+    color: var(--text-dark); /* Cor escura para subtítulo */
+    text-align: center;
+    margin-top: 35px; /* Mais espaço */
+    margin-bottom: 25px; /* Mais espaço */
+    font-weight: 600;
 }
 
 .profile-photo {
-  display: block;
-  margin: 0 auto 20px auto;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #6c63ff;
+    display: block;
+    margin: 0 auto 30px auto; /* Mais margem */
+    width: 120px; /* Um pouco maior */
+    height: 120px; /* Um pouco maior */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color); /* Borda mais grossa na cor primária */
+    box-shadow: 0 0 0 4px var(--primary-light); /* Anel externo sutil com cor clara da primária */
 }
 
 #profileInfo p {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 8px;
+    font-size: 1rem; /* Tamanho base */
+    color: var(--text-dark); /* Cor para dados do perfil */
+    margin-bottom: 10px; /* Mais margem */
+}
+
+#profileInfo p strong {
+    color: var(--primary-color); /* Destaque para o strong nas informações */
 }
 
 form {
-  margin-top: 20px;
+    margin-top: 30px; /* Mais espaço */
 }
 
 form p {
-  background-color: #fffbcc;
-  color: #665c00;
-  padding: 10px;
-  border-left: 5px solid #ffec3d;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  font-size: 14px;
+    background-color: #fff9c4; /* Amarelo mais suave */
+    color: #a08c00; /* Texto mais escuro */
+    padding: 12px; /* Mais padding */
+    border-left: 5px solid #ffd54f; /* Borda mais grossa e vibrante */
+    border-radius: 8px; /* Arredondamento */
+    font-size: 15px;
+    margin-bottom: 25px; /* Mais margem */
+    font-weight: 500;
 }
 
 label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-  color: #444;
+    display: block;
+    margin-bottom: 8px; /* Mais margem */
+    font-weight: 600;
+    color: var(--text-dark); /* Mais escuro */
 }
 
-input[type="text"],
+/* Estilo geral para inputs de texto, email, password e date */
 input[type="email"],
+input[type="password"],
+input[type="text"],
 input[type="date"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 18px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: all 0.3s ease;
-  background-color: #fff;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-  color: #333;
+    width: 100%;
+    padding: 14px; /* Mais padding */
+    margin-bottom: 20px; /* Mais margem */
+    border: 1px solid var(--border-color); /* Borda suave */
+    border-radius: 10px; /* Mais arredondado */
+    font-size: 16px; /* Um pouco maior */
+    background-color: var(--background-card);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03); /* Sombra interna mais sutil */
 }
 
 input::placeholder {
-  color: #aaa;
-  transition: color 0.3s;
+    color: var(--text-light); /* Placeholder mais sutil */
 }
 
 input:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.15);
-  background-color: #fcfcff;
-  outline: none;
-  color: #222;
+    border-color: var(--primary-color); /* Borda na cor primária */
+    box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2); /* Sombra de foco mais visível e suave */
+    outline: none;
+    background-color: #fcfdff; /* Fundo levemente mais claro ao focar */
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #6c63ff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+button[type="submit"] {
+    width: 100%;
+    padding: 14px; /* Mais padding */
+    background-color: var(--primary-color); /* Cor primária */
+    color: #fff;
+    border: none;
+    border-radius: 10px; /* Mais arredondado */
+    font-size: 17px; /* Um pouco maior */
+    font-weight: 700; /* Mais negrito */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Adicionado transform para hover */
+    box-shadow: 0 4px 10px rgba(108, 99, 255, 0.3); /* Sombra para o botão */
 }
 
-button:hover {
-  background-color: #574fd6;
+button[type="submit"]:hover {
+    background-color: var(--primary-dark); /* Tom mais escuro no hover */
+    transform: translateY(-2px); /* Efeito de levantar */
 }
 
+/* Botão voltar para home */
 #backHomeBtn {
   position: fixed;
   top: 20px;
   left: 20px;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   background-color: #6c63ff;
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: background-color 0.3s, transform 0.2s;
   z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 
 #backHomeBtn:hover {
   background-color: #574b90;
+  transform: translateY(-3px);
 }
 
+#backHomeBtn svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
+
+/* Toasts (Mantido o que já havíamos alinhado) */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: fixed;
+    z-index: 9999; /* Z-index alto para garantir que apareça acima de tudo */
+    top: 20px; /* Usando o top 20px do seu HTML */
+    right: 20px; /* Usando o right 20px do seu HTML */
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif; /* Usando Poppins */
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(100%); /* Desliza da direita */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0); /* Desliza para a posição */
+}
+
+/* Cores específicas para tipos de mensagem do toast (combinando com a paleta) */
+.toast-success {
+    background-color: #4CAF50; /* Verde padrão */
+}
+
+.toast-error {
+    background-color: #f44336; /* Vermelho padrão */
+}
+
+.toast-info {
+    background-color: #2196F3; /* Azul padrão */
+}
+
+
+/* Responsivo */
+@media (max-width: 550px) {
+    .profile-container {
+        padding: 25px; /* Ajuste o padding para telas menores */
+        margin: 15px; /* Adiciona margem lateral para não colar nas bordas */
+        border-radius: 10px; /* Arredondamento menor para dispositivos móveis */
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    input[type="date"],
+    button[type="submit"] {
+        padding: 10px; /* Reduz padding em inputs/botões */
+        font-size: 15px;
+        border-radius: 6px; /* Arredondamento menor */
+    }
+
+    label {
+        font-size: 15px;
+    }
+
+    .profile-photo {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 25px;
+    }
+
+    #backHomeBtn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        top: 15px;
+        left: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+}

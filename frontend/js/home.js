@@ -6,7 +6,21 @@ const orderSelect = document.getElementById("ordem");
 
 let allEvents = [];
 
-// Verifica se o usuário está logado
+// Decodifica o token JWT para extrair dados do payload
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
+}
+
+// Verifica se o usuário está logado e redireciona para perfil
 function goToProfile() {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -17,14 +31,14 @@ function goToProfile() {
   window.location.href = "/profile.html";
 }
 
-// Função para buscar eventos ativos
+// Buscar eventos ativos do backend
 async function fetchActiveEvents() {
   const res = await fetch(API_URL);
   const events = await res.json();
   return events.filter(event => event.is_activated);
 }
 
-// Renderiza os eventos filtrados
+// Renderiza eventos (sem botão inscrever)
 function renderActiveEvents(events) {
   eventsContainer.innerHTML = "";
 
@@ -62,21 +76,7 @@ function renderActiveEvents(events) {
   });
 }
 
-// Decodifica o token JWT para extrair dados do payload
-function parseJwt(token) {
-  try {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-  } catch (e) {
-    return null;
-  }
-}
-
-// Função para buscar perfil do usuário logado e atualizar nome no DOM
+// Busca o perfil do usuário logado (comum ou empresa) e atualiza nome no DOM
 async function fetchAndDisplayUserName() {
   const token = localStorage.getItem('token');
   if (!token) return;
@@ -91,7 +91,7 @@ async function fetchAndDisplayUserName() {
   } else if (payload.userType === 'company') {
     url = 'http://localhost:3000/api/companies/profile';
   } else {
-    return; // Tipo de usuário desconhecido
+    return;
   }
 
   try {
@@ -105,7 +105,6 @@ async function fetchAndDisplayUserName() {
 
     const data = await res.json();
 
-    // Atualiza o nome na página
     const userNameElem = document.getElementById('userName');
     if (userNameElem) {
       userNameElem.textContent = data.full_name || data.company_name || 'Usuário';
@@ -116,6 +115,7 @@ async function fetchAndDisplayUserName() {
   }
 }
 
+// Aplica os filtros e ordena os eventos antes de renderizar
 function applyFilters() {
   const searchTerm = searchInput.value.toLowerCase();
   const selectedDate = dateInput.value;
@@ -123,50 +123,53 @@ function applyFilters() {
 
   let filtered = [...allEvents];
 
-  // Filtrar por nome
   if (searchTerm) {
     filtered = filtered.filter(event =>
       event.title.toLowerCase().includes(searchTerm)
     );
   }
 
-  // Filtrar por data
   if (selectedDate) {
     filtered = filtered.filter(event =>
       new Date(event.occasion_date).toISOString().split('T')[0] === selectedDate
     );
   }
 
-  // Ordenar
   if (selectedOrder === 'asc') {
     filtered.sort((a, b) => a.title.localeCompare(b.title));
   } else if (selectedOrder === 'desc') {
     filtered.sort((a, b) => b.title.localeCompare(a.title));
   } else {
-    // Default: data mais recente primeiro
     filtered.sort((a, b) => new Date(b.occasion_date) - new Date(a.occasion_date));
   }
 
   renderActiveEvents(filtered);
 }
 
+// Carrega eventos e aplica filtros na página inicial
 async function loadHomePageEvents() {
   allEvents = await fetchActiveEvents();
   applyFilters();
 }
 
-// Inicializa quando o DOM está carregado
+// Inicialização quando o DOM está pronto
 document.addEventListener("DOMContentLoaded", () => {
   loadHomePageEvents();
   fetchAndDisplayUserName();
+
+  const userName = localStorage.getItem("userName");
+  if (userName) {
+    const userNameElem = document.getElementById("userName");
+    if (userNameElem) userNameElem.textContent = userName;
+  }
 });
 
-// Filtros ao digitar / mudar
+// Filtros em tempo real
 searchInput.addEventListener("input", applyFilters);
 dateInput.addEventListener("change", applyFilters);
 orderSelect.addEventListener("change", applyFilters);
 
-// Menu de perfil
+// Menu do perfil
 function toggleMenu() {
   const dropdown = document.getElementById('profileDropdown');
   dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
@@ -182,4 +185,5 @@ document.addEventListener('click', function (event) {
 
 function logout() {
   localStorage.removeItem('token');
+  window.location.href = '../views/login.html';
 }
