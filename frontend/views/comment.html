@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários do Evento - FanParty</title>
+    <link rel="stylesheet" href="../css/comment.css">
+</head>
+<body>
+    <div id="toast-container"></div>
+    <header>
+        <h1>Comentários do Evento</h1>
+    </header>
+    <main>
+        <section class="comments-section">
+            <h2>Deixe seu Comentário</h2>
+            <form id="comment-form" class="comment-form">
+                <textarea id="comment-content" placeholder="Escreva seu comentário aqui..." required></textarea>
+                <button type="submit">Publicar Comentário</button>
+            </form>
+
+            <h2>Comentários Recentes</h2>
+            <div id="comments-list" class="comments-list">
+                <p class="no-comments">Nenhum comentário ainda. Seja o primeiro a comentar!</p>
+            </div>
+        </section>
+    </main>
+    <button id="backHomeBtn" title="Voltar para a Home" aria-label="Home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+    </button>
+
+    <script src="../js/comment.js"></script>
+</body>
+</html>

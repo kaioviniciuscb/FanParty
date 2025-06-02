@@ -67,10 +67,23 @@ function renderActiveEvents(events) {
     description.classList.add("event-description");
     description.innerHTML = `<strong>Descrição:</strong> ${event.event_description}`;
 
+    const commentsButton = document.createElement("button");
+    commentsButton.classList.add("comments-button");
+    commentsButton.innerHTML = `
+        <svg fill="currentColor" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8.35078106,18 L3.62469505,21.7808688 C2.9699317,22.3046795 2,21.8385062 2,21 L2,5 C2,3.34314575 3.34314575,2 5,2 L19,2 C20.6568542,2 22,3.34314575 22,5 L22,15 C22,16.6568542 20.6568542,18 19,18 L8.35078106,18 Z M4,18.9193752 L7.37530495,16.2191312 C7.552618,16.0772808 7.7729285,16 8,16 L19,16 C19.5522847,16 20,15.5522847 20,15 L20,5 C20,4.44771525 19.5522847,4 19,4 L5,4 C4.44771525,4 4,4.44771525 4,5 L4,18.9193752 Z"/>
+        </svg>
+    `;
+    
+    commentsButton.onclick = () => {
+        window.location.href = `../views/comment.html?eventId=${event.id}`; 
+    };
+
     card.appendChild(title);
     card.appendChild(date);
     card.appendChild(location);
     card.appendChild(description);
+    card.appendChild(commentsButton);
 
     eventsContainer.appendChild(card);
   });
@@ -82,13 +95,15 @@ async function fetchAndDisplayUserName() {
   if (!token) return;
 
   const payload = parseJwt(token);
-  if (!payload || !payload.userType) return;
+  if (!payload || !payload.type) return;
+
+  console.log('Tipo usuário:', payload.type);
 
   let url = '';
 
-  if (payload.userType === 'common') {
+  if (payload.type === 'common_user') {
     url = 'http://localhost:3000/api/common-users/profile';
-  } else if (payload.userType === 'company') {
+  } else if (payload.type === 'company') {
     url = 'http://localhost:3000/api/companies/profile';
   } else {
     return;
@@ -138,10 +153,17 @@ function applyFilters() {
   } else if (selectedOrder === 'desc') {
     filtered.sort((a, b) => b.title.localeCompare(a.title));
   } else {
-    // Default: data mais recente primeiro
-    filtered.sort((a, b) => new Date(b.occasion_date) - new Date(a.occasion_date));
+     filtered.sort((a, b) => {  
+      const dateA = new Date(a.occasion_date);
+      const dateB = new Date(b.occasion_date);
+      
+      // Adicione uma verificação para datas inválidas para evitar NaN
+      if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
+        console.warn("Data inválida encontrada na ordenação:", a.occasion_date, b.occasion_date);
+        return 0;
+        } return dateA.getTime() - dateB.getTime();
+     });
   }
-
   renderActiveEvents(filtered);
 }
 
@@ -152,14 +174,11 @@ async function loadHomePageEvents() {
 
 // Inicialização quando o DOM está pronto
 document.addEventListener("DOMContentLoaded", () => {
+  let informacoes = localStorage.getItem('token')
+  const payload = parseJwt(informacoes);
+  console.log('Payload do token:', payload);
   loadHomePageEvents();
   fetchAndDisplayUserName();
-
-  const userName = localStorage.getItem("userName");
-  if (userName) {
-    const userNameElem = document.getElementById("userName");
-    if (userNameElem) userNameElem.textContent = userName;
-  }
 });
 
 // Filtros em tempo real
