@@ -69,6 +69,16 @@ const CompanyRepository = {
         });
     },
 
+    async updatePassword(id, newPassword) {
+        return new Promise((resolve, reject) => {
+            db.query(
+                `UPDATE companies SET password = ? WHERE id = ?`,
+                [newPassword, id],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
     async activate(id) {
         return new Promise((resolve, reject) => {
             db.query(
