@@ -1,4 +1,3 @@
-const { update, deactivate } = require("../repositories/CommentRepository");
 const CommentService = require("../services/CommentService");
 
 const CommentController = {
@@ -14,7 +13,6 @@ const CommentController = {
             const result = await CommentService.create(commentData);
             return res.status(201).json(result);
         } catch (error) {
-            console.error("Erro ao criar comentário:", error);
             return res.status(400).json({ message: error.message });
         }
     },

@@ -5,7 +5,7 @@ const authenticateJWT = require("../middlewares/authenticateJWT");
 
 router.post("/new/:eventId", authenticateJWT, CommentController.create);
 router.get("/", CommentController.getAll);
-router.get("/me", authenticateJWT, CommentController.getMyComments);
+router.get("/my-comments", authenticateJWT, CommentController.getMyComments);
 router.get("/author/:authorType/:authorId", CommentController.getByAuthor);
 router.get("/event/:eventId", CommentController.getByEventId);
 router.get("/:commentId", CommentController.getById);

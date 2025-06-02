@@ -71,7 +71,19 @@ connection.connect((err) => {
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                     is_activated BOOLEAN DEFAULT TRUE,
-                    FOREIGN KEY (event_id) REFERENCES events(id)
+                    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+                )`,
+                `CREATE TABLE IF NOT EXISTS reviews (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    reviewer_id INT NOT NULL,
+                    reviewer_type ENUM('common_user', 'company') NOT NULL,
+                    event_id INT NOT NULL,
+                    rating TINYINT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                    is_activated BOOLEAN DEFAULT TRUE,
+                    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+                    UNIQUE (reviewer_id, reviewer_type, event_id)
                 )`
             ];
 
