@@ -24,10 +24,21 @@ const CompanyController = {
             if (req.user.type !== "company") {
                 return res.status(403).json({ message: "Acesso negado" });
             }
-            const company = await CompanyService.getProfile(req.user.id);
+            const company = await CompanyService.getById(req.user.id);
+            delete company.password;
             res.status(200).json(company);
         } catch (error) {
             res.status(404).json({ message: error.message });
+        }
+    },
+
+    async getById(req, res){
+        try {
+            const company = await CompanyService.getById(req.params.companyId);
+            delete company.password;
+            return res.status(200).json(company);
+        } catch (error){
+            return res.status(404).json({ message: error.message });
         }
     },
 
@@ -40,6 +51,21 @@ const CompanyController = {
             res.status(200).json(result);
         } catch (error) {
             res.status(400).json({ message: error.message });
+        }
+    },
+
+    async changePassword (req, res) {
+        try {
+            if (req.user.type !== "company") return res.status(403).json({ message: "Acesso negado" });
+
+            const { newPassword } = req.body;
+
+            if (!newPassword) return res.status(400).json({ message: "Senha inválida!" });
+
+            const result = await CompanyService.changePassword(req.user.id, newPassword);
+            return res.status(200).json(result);
+        } catch (error){
+            return res.status(400).json({ message: error.message });
         }
     },
 

@@ -33,7 +33,7 @@ const CommonUserService = {
         return { message: "Login realizado com sucesso!", token };
     },
 
-    async getProfile(commonUserId) {
+    async getById(commonUserId) {
         const commonUser = await CommonUserRepository.findById(commonUserId);
         if (!commonUser) throw new Error("Usuário não encontrado!");
         return commonUser;
@@ -42,6 +42,12 @@ const CommonUserService = {
     async update(commonUserId, data) {
         await CommonUserRepository.update(commonUserId, data);
         return { message: "Usuário atualizado com sucesso!" };
+    },
+
+    async changePassword(commonUserId, newPassword) {
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await CommonUserRepository.updatePasword(commonUserId, hashedNewPassword);
+        return { message: "Senha alterada com sucesso!" };
     },
 
     async activate(commonUserId) {
