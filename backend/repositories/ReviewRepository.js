@@ -82,14 +82,19 @@ const ReviewRepository = {
     },
 
     async deactivate(reviewId) {
-        return new Promise((resolve, reject) => {
-            db.query(
-                `UPDATE reviews SET is_activated = FALSE WHERE id = ?`,
-                [reviewId],
-                (err, results) => err ? reject(err) : resolve(results)
-            );
-        });
-    },
+    return new Promise((resolve, reject) => {
+        db.query(
+            `DELETE FROM reviews WHERE id = ?`,
+            [reviewId],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(results);
+            }
+        );
+    });
+},
 
     async activate(reviewId){
         return new Promise((resolve, reject) => {
