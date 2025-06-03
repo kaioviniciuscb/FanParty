@@ -72,6 +72,21 @@ const ReviewController = {
         }
     },
 
+    async getEventAverageRating(req, res) {
+        try {
+            const eventId = req.params.eventId;
+
+            if (!eventId) {
+                return res.status(400).json({ error: 'Parâmetro eventId é obrigatório.' });
+            }
+
+            const result = await ReviewService.getEventAverageRating(eventId);
+            res.status(200).json(result);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    },
+
     async update(req, res) {
         const { reviewId } = req.params;
         const rating = req.body;

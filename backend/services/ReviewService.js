@@ -29,7 +29,13 @@ const ReviewService = {
     },
 
     async getEventAverageRating(eventId) {
-        return await ReviewRepository.getEventAverageRating(eventId);
+        const average = await ReviewRepository.getEventAverageRating(eventId);
+
+        if (average === null) {
+            return { message: 'Nenhuma avaliação ativa encontrada para este evento.', average: null };
+        }
+
+        return { message: 'Média de avaliações encontrada com sucesso.', average };
     },
 
     async update(reviewerId, newData) {
