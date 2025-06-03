@@ -14,12 +14,15 @@ body {
 }
 
 header {
-    background-color:#5E35B1;
+    background-color: #5E35B1;
     color: white;
     padding: 20px 0;
     width: 100%;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-left: 80px;
+    padding-right: 20px;
 }
 
 main {
@@ -29,14 +32,21 @@ main {
     box-sizing: border-box;
 }
 
-.comments-section {
+.comments-section,
+.rating-summary-section,
+.review-form-section,
+.individual-reviews-section {
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-.comments-section h2 {
+.comments-section h2,
+.rating-summary-section h2,
+.review-form-section h2,
+.individual-reviews-section h2 {
     color: #6a1b9a;
     margin-top: 0;
     margin-bottom: 20px;
@@ -89,7 +99,10 @@ main {
     border-radius: 6px;
     padding: 15px;
     margin-bottom: 15px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .comment-item strong {
@@ -100,14 +113,24 @@ main {
 }
 
 .comment-item p {
-    margin: 0 0 10px 0;
+    margin: 0;
     line-height: 1.5;
 }
 
 .comment-item .meta {
     font-size: 0.9em;
     color: #777;
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+}
+
+.comment-content-display {
+    margin-bottom: 10px;
+    flex-grow: 1;
 }
 
 .no-comments {
@@ -120,33 +143,33 @@ main {
 }
 
 #backHomeBtn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 50px;
-  height: 50px;
-  background-color: #6c63ff;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, transform 0.2s;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #6c63ff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 }
 
 #backHomeBtn:hover {
-  background-color: #574b90;
-  transform: translateY(-3px);
+    background-color: #574b90;
+    transform: translateY(-3px);
 }
 
 #backHomeBtn svg {
-  width: 28px;
-  height: 28px;
-  fill: white;
+    width: 28px;
+    height: 28px;
+    fill: white;
 }
 
 .edit-comment-textarea {
@@ -157,6 +180,7 @@ main {
     border-radius: 5px;
     font-size: 1em;
     resize: vertical;
+    min-height: 80px;
     box-sizing: border-box;
 }
 
@@ -177,36 +201,31 @@ main {
 }
 
 .save-edit-btn {
-    background-color: #2196F3;
+    background-color: #4CAF50;
     color: white;
 }
 
 .save-edit-btn:hover {
-    background-color: #1976D2;
+    background-color: #45a049;
 }
 
 .cancel-edit-btn {
-    background-color: #F44336;
+    background-color: #f0ad4e;
     color: white;
 }
 
 .cancel-edit-btn:hover {
-    background-color: #D32F2F;
+    background-color: #ec971f;
 }
 
-.comment-item {
+.comment-actions {
     display: flex;
-    flex-direction: column;
-}
-
-.comment-content-display {
-    margin-bottom: 10px;
+    gap: 8px;
+    justify-content: flex-end;
 }
 
 .comment-actions button {
-    padding: 9px 12px;
-    margin-right: 7px;
-    margin-top: 10px;
+    padding: 6px 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -218,6 +237,7 @@ main {
     background-color: #2196F3;
     color: white;
 }
+
 .edit-comment-btn:hover {
     background-color: #1976D2;
 }
@@ -226,8 +246,19 @@ main {
     background-color: #F44336;
     color: white;
 }
+
 .delete-comment-btn:hover {
     background-color: #D32F2F;
+}
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .toast {
@@ -236,18 +267,15 @@ main {
     padding: 15px 20px;
     border-radius: 8px;
     text-align: center;
-    position: fixed;
-    z-index: 9999;
-    top: 20px;
-    right: 20px;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateX(100%);
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s;
 }
+
 .toast.show {
     visibility: visible;
     opacity: 1;
@@ -264,4 +292,193 @@ main {
 
 .toast-info {
     background-color: #2196F3;
+}
+
+.average-rating-display {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.average-rating-display .rating-stars {
+    margin: 10px auto;
+}
+
+.total-reviews-count {
+    font-size: 0.9em;
+    color: #777;
+    display: block;
+    margin-top: 5px;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.rating-input>input {
+    display: none;
+}
+
+.rating-input>label {
+    font-size: 2.5em;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-input>input:checked+label,
+.rating-input>input:checked~label,
+.rating-input>label:hover,
+.rating-input>label:hover~label {
+    color: #FFD700;
+}
+
+.average-rating-display .rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.star-half {
+    position: relative;
+    display: inline-block;
+    font-size: 1.2em;
+    overflow: hidden;
+    color: #ddd;
+}
+
+.star-half::before {
+    content: '\2605';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    color: #FFD700;
+    overflow: hidden;
+}
+
+.rating-display .star-full,
+.average-rating-display .rating-stars .star-full {
+    color: #FFD700;
+    font-size: 1.2em;
+}
+
+.rating-display .star-empty,
+.average-rating-display .rating-stars .star-empty {
+    color: #ddd;
+    font-size: 1.2em;
+}
+
+#submit-review-btn {
+    background-color: #9c27b0;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#submit-review-btn:hover {
+    background-color: #7b1fa2;
+}
+
+.hidden-message {
+    text-align: center;
+    color: #777;
+    margin-top: 15px;
+}
+
+.review-form.hidden {
+    display: none;
+}
+
+.reviews-list {
+    margin-top: 20px;
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+}
+
+.review-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.review-item strong {
+    color: #6a1b9a;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.review-item .meta {
+    font-size: 0.9em;
+    color: #777;
+    text-align: right;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-item .rating-display {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.review-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.review-actions button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+.edit-review-btn {
+    background-color: #2196F3;
+    color: white;
+}
+
+.edit-review-btn:hover {
+    background-color: #1976D2;
+}
+
+.delete-review-btn {
+    background-color: #F44336;
+    color: white;
+}
+
+.delete-review-btn:hover {
+    background-color: #D32F2F;
+}
+
+.no-reviews {
+    text-align: center;
+    color: #888;
+    padding: 20px;
+    border: 1px dashed #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
 }
