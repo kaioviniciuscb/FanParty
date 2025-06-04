@@ -158,10 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput.value;
 
-        if(cnpjInput && cnpjInput.value.length !== 14) {
-            showToast('CNPJ inválido! Deve conter 14 números.', 'error');
-            return
-        }
         if (password && password !== confirmPassword) {
             showToast('As senhas não coincidem!', 'error');
             return;
