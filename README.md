@@ -42,6 +42,8 @@ Usuários podem avaliar eventos, promover encontros, formar parcerias e fortalec
 - Visualização do perfil do usuário logado
 - Atualização e exclusão da conta
 - Renderização de páginas HTML diretamente via backend
+- Criação, visualização e exclusão de eventos
+- Adição de comentários e avaliações aos eventos
 
 ---
 
@@ -99,7 +101,7 @@ npm install
 
 ---
 
-### 🔹 Rodando o projeto
+### 🔹 Rodando o servidor
 
 ```bash
 npm run dev
@@ -108,7 +110,7 @@ npm run dev
 O backend estará disponível em:
 
 ```
-http://localhost:3000
+http://localhost:3000/api
 ```
 
 ---
@@ -142,17 +144,7 @@ fanparty/
 
 ## 🧪 Testes com Postman
 
-Você pode testar as seguintes rotas:
-
-| Método | Rota               | Protegida? | Descrição                          |
-|--------|--------------------|------------|------------------------------------|
-| POST   | `/api/cadastro`    | ❌         | Cadastro de usuário ou empresa     |
-| POST   | `/api/login`       | ❌         | Login com retorno de token JWT     |
-| GET    | `/api/perfil`      | ✅         | Ver perfil do usuário logado       |
-| PUT    | `/api/perfil`      | ✅         | Atualizar dados do usuário         |
-| DELETE | `/api/perfil`      | ✅         | Excluir conta                      |
-
-Use o token no header:
+Ao realizar testes no Postman, verifique se a rota é protegida e use o token no header:
 
 ```
 Authorization: Bearer SEU_TOKEN_AQUI
@@ -162,8 +154,7 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ## 🌱 Possibilidades Futuras
 
-- Feed de eventos
-- Sistema de comentários e curtidas
+- Sistema de curtidas
 - Parcerias entre empresas e usuários
 - Integração com plataformas de pagamento
 - Notificações de eventos próximos
