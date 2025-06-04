@@ -46,7 +46,7 @@ const CommonUserService = {
 
     async changePassword(commonUserId, newPassword) {
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-        await CommonUserRepository.updatePasword(commonUserId, hashedNewPassword);
+        await CommonUserRepository.updatePassword(commonUserId, hashedNewPassword);
         return { message: "Senha alterada com sucesso!" };
     },
 

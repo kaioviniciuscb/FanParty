@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameDisplay = document.getElementById('name');
     const emailDisplay = document.getElementById('email');
 
-    let currentUserId = null;
     let currentAccountType = null;
     let authToken = null;
 
@@ -73,11 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Função Principal: Carregar Dados do Perfil ---
     async function fetchUserProfile() {
-        currentUserId = localStorage.getItem('userId');
         currentAccountType = localStorage.getItem('accountType');
         authToken = localStorage.getItem('token');
+        console.log('Tipo de conta atual:', currentAccountType);
+        console.log('Token de autenticação:', authToken);
 
-        if (!currentUserId || !currentAccountType || !authToken) {
+        if (!currentAccountType || !authToken) {
             showToast('Sessão expirada ou informações incompletas. Faça login novamente.', 'error');
             setTimeout(() => {
                 window.location.href = '../views/login.html';
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableFieldsInDiv(commonFieldsDiv);
 
                 companyNameInput.value = userData.company_name || '';
-                cnpjInput.value = userData.cnpj || '';
+                cnpjInput.value = '';
                 branchInput.value = userData.branch_of_activity || '';
             }
 
@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput.value;
 
-        if(cnpjInput && cnpjInput.value && !/^\d{14}$/.test(cnpjInput.value)) {
-            showToast('CNPJ inválido! Deve conter 14 dígitos.', 'error');
+        if(cnpjInput && cnpjInput.value.length !== 14) {
+            showToast('CNPJ inválido! Deve conter 14 números.', 'error');
             return
         }
         if (password && password !== confirmPassword) {
@@ -177,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dataToSend = {
             email: email,
-            ...(password && { password: password }),
             user_type: currentAccountType
         };
 
@@ -191,10 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let updateApiUrl = '';
+        let updatePasswordApiUrl = '';
+
         if (currentAccountType === 'common') {
             updateApiUrl = `http://localhost:3000/api/common-users/profile`;
+            updatePasswordApiUrl = `http://localhost:3000/api/common-users/change-password`;
         } else if (currentAccountType === 'company') {
             updateApiUrl = `http://localhost:3000/api/companies/profile`;
+            updatePasswordApiUrl = `http://localhost:3000/api/companies/change-password`;
         }
 
         try {
@@ -213,9 +216,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errorData.message || 'Erro ao atualizar perfil.');
             }
 
-            const result = await response.json();
-            showToast(result.message || 'Perfil atualizado com sucesso!', 'success');
-            fetchUserProfile(); 
+            let sucessMessage = 'Perfil atualizado com sucesso!';
+
+            if (password) {
+                console.log({new_password: password});
+                try {
+                    const passwordResponse = await fetch(updatePasswordApiUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${authToken}`
+                        },
+                        body: JSON.stringify({ newPassword: password }),
+                    });
+
+                    if (!passwordResponse.ok) {
+                        const passwordErrorData = await passwordResponse.json();
+                        showToast(`Erro ao atualizar senha: ${passwordErrorData.message || 'Erro desconhecido.'}`, 'error');
+                        throw new Error(passwordErrorData.message || 'Erro ao atualizar senha.');
+                    }else {
+                        sucessMessage = ('Perfil e senha atualizados com sucesso!');
+                    }
+                } catch (passwordError) {
+                    console.error('Erro ao atualizar senha:', passwordError);
+                    showToast(`Não foi possível atualizar a senha: ${passwordError.message}`, 'error');
+                }
+            }
+            showToast(sucessMessage, 'success');
+            fetchUserProfile();
 
         } catch (error) {
             console.error('Erro ao atualizar perfil:', error);
