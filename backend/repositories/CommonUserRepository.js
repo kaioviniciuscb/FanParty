@@ -73,6 +73,16 @@ const CommonUserRepository = {
         });
     },
 
+    async updatePassword(id, newPassword){
+        return new Promise((resolve, reject) => {
+            db.query(
+                `UPDATE common_users SET password = ? WHERE id = ?`,
+                [newPassword, id],
+                (err, results) => err ? reject(err) : resolve(results)
+            );
+        });
+    },
+
     async activate(id) {
         return new Promise((resolve, reject) => {
             db.query(

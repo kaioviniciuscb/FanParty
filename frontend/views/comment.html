@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários e Avaliações do Evento - FanParty</title>
+    <link rel="stylesheet" href="../css/comment.css">
+    </head>
+<body>
+    <div id="toast-container"></div> 
+
+    <header>
+        <button id="backHomeBtn" title="Voltar para a Home" aria-label="Home">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+        </button>
+        <h1>Comentários e Avaliações do Evento</h1>
+    </header>
+
+    <main>
+        <section class="rating-summary-section">
+            <h2>Avaliação do Evento</h2>
+            <div id="average-rating-display" class="average-rating-display">
+                <span id="average-rating-value">--</span> / 5 estrelas
+                <div id="average-rating-stars" class="rating-stars display-stars">
+                    </div>
+                <span id="total-reviews-count">(0 avaliações)</span>
+            </div>
+        </section>
+        
+        <section class="comments-section">
+            <h2>Deixe seu Comentário</h2>
+            <form id="comment-form" class="comment-form">
+                <textarea id="comment-content" placeholder="Escreva seu comentário aqui..." required></textarea>
+                <button type="submit">Publicar Comentário</button>
+            </form>
+
+            <h2>Comentários Recentes</h2>
+            <div id="comments-list" class="comments-list">
+                </div>
+        </section>
+        
+        <section class="review-form-section">
+            <h2>Deixe sua Avaliação</h2>
+            
+            <p id="review-not-allowed-message" class="hidden-message" style="color: #6a1b9a; font-weight: bold;"></p> 
+            
+            <form id="review-form" class="review-form">
+                <div class="rating-input">
+                    <label for="star5" title="5 estrelas">&#9733;</label><input type="radio" id="star5" name="rating" value="5" />
+                    <label for="star4" title="4 estrelas">&#9733;</label><input type="radio" id="star4" name="rating" value="4" />
+                    <label for="star3" title="3 estrelas">&#9733;</label><input type="radio" id="star3" name="rating" value="3" />
+                    <label for="star2" title="2 estrelas">&#9733;</label><input type="radio" id="star2" name="rating" value="2" />
+                    <label for="star1" title="1 estrela">&#9733;</label><input type="radio" id="star1" name="rating" value="1" />
+                </div>
+                <button type="submit" id="submit-review-btn">Enviar Avaliação</button>
+            </form>
+            <p id="my-review-status" class="hidden-message">Campo de avaliação, para edição, va ao final da página</p>
+        </section>
+
+        <section class="individual-reviews-section">
+            <h2>Avaliações Individuais</h2>
+            <div id="reviews-list" class="reviews-list">
+                <p class="no-reviews">Nenhum avaliação ainda. Seja o primeiro a avaliar!</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/comment.js"></script>
+</body>
+</html>

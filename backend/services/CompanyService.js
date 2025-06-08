@@ -28,12 +28,12 @@ const CompanyService = {
         const validPassword = await bcrypt.compare(password, company.password);
         if (!validPassword) throw new Error("Credenciais inválidas!");
 
-        const token = jwt.sign({ companyId: company.id, userType: 'company' }, secret, { expiresIn: "1h" });
+        const token = jwt.sign({ id: company.id, type: 'company' }, secret, { expiresIn: "1h" });
 
         return { message: "Login realizado com sucesso!", token };
     },
 
-    async getProfile(companyId) {
+    async getById(companyId) {
         const company = await CompanyRepository.findById(companyId);
         if (!company) {
             throw new Error("Empresa não encontrada!");
@@ -44,6 +44,12 @@ const CompanyService = {
     async update(companyId, data) {
         await CompanyRepository.update(companyId, data);
         return { message: "Empresa atualizada com sucesso!" };
+    },
+
+    async changePassword(companyId, newPassword) {
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await CompanyRepository.updatePassword(companyId, hashedNewPassword);
+        return { message: "Senha alterada com sucesso!" };
     },
 
     async activate(companyId) {
